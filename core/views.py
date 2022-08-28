@@ -12,7 +12,7 @@ def index(request):
 
 def getResponse(request):
     params = {'part':'snippet','maxResult':10000, 'publishedAfter':'2019-01-01T00:00:00Z', 'q':'cricket'}
-    response = requests.get("https://www.googleapis.com/youtube/v3/search?key=AIzaSyA7qBc9uodDSipLGjDzKPIh-sTBOpCZIt0",params=params)
+    response = requests.get("https://www.googleapis.com/youtube/v3/search?key={}",params=params)
     data=json.loads(response.text)
     for d in data['items']:
         videoID = d['id']['videoId']
