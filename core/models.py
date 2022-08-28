@@ -2,9 +2,9 @@ from django.db import models
 
 
 class VideoInformation(models.Model):
-	title = models.CharField(max_length=255)
+	title = models.TextField(blank=True)
 	channelTitle = models.CharField(max_length=255)
-	description = models.CharField(max_length=512, blank=True)
+	description = models.TextField(blank=True)
 	videoId = models.CharField(max_length=512, blank=True)
 	published_on = models.CharField(max_length=255)
 	thumbnail_url = models.CharField(max_length=512, blank=True)
