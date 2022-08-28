@@ -5,6 +5,9 @@ import requests
 import json
 import os
 from core.models import VideoInformation
+from core.serializers import VideoInformationSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -36,3 +39,14 @@ def getResponse(request):
 
 
     return HttpResponse(data['items'])
+
+
+class VideoList(APIView):
+    """
+    List of videos.
+    """
+    paginate_by = 10
+    def get(self, request, format=None):
+        videos = VideoInformation.objects.filter(is_deleted=False).order_by('-published_on')
+        serializer = VideoInformationSerializer(videos, many=True)
+        return Response(serializer.data)
