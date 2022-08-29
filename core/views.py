@@ -8,6 +8,8 @@ from core.models import VideoInformation
 from core.serializers import VideoInformationSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import generics
+from rest_framework.filters import SearchFilter
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -15,7 +17,7 @@ def index(request):
 
 def getResponse(request):
     params = {'part':'snippet','maxResult':10000, 'publishedAfter':'2019-01-01T00:00:00Z', 'q':'cricket'}
-    response = requests.get("https://www.googleapis.com/youtube/v3/search?key={}",params=params)
+    response = requests.get("https://www.googleapis.com/youtube/v3/search?key=AIzaSyA7qBc9uodDSipLGjDzKPIh-sTBOpCZIt0",params=params)
     data=json.loads(response.text)
     for d in data['items']:
         videoID = d['id']['videoId']
@@ -41,12 +43,22 @@ def getResponse(request):
     return HttpResponse(data['items'])
 
 
-class VideoList(APIView):
+# class VideoList(APIView):
+#     """
+#     List of videos.
+#     """
+#     def get(self, request, format=None):
+#         videos = VideoInformation.objects.filter(is_deleted=False).order_by('-published_on')
+#         serializer = VideoInformationSerializer(videos, many=True)
+#         return Response(serializer.data)
+
+class VideoList(generics.ListCreateAPIView):
     """
     List of videos.
     """
-    paginate_by = 10
-    def get(self, request, format=None):
-        videos = VideoInformation.objects.filter(is_deleted=False).order_by('-published_on')
-        serializer = VideoInformationSerializer(videos, many=True)
-        return Response(serializer.data)
+    
+    queryset = VideoInformation.objects.filter(is_deleted=False).order_by('-published_on')
+    serializer_class = VideoInformationSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title','description']
+    
