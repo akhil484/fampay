@@ -17,6 +17,6 @@ from django.urls import include, re_path as url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^core/', include('core.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^core/', include('core.urls')),
 ]
