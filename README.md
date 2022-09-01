@@ -119,8 +119,6 @@ python manage.py migrate
 ---
 
 
----
-
 **Step 8**: Running the Project in local server
 
 <br>
@@ -131,12 +129,6 @@ python manage.py migrate
 python manage.py runserver
 ```
 <br/>
-
----
-
-<br>
-
---- 
 
 
 
