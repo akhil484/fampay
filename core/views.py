@@ -15,14 +15,6 @@ from rest_framework.filters import SearchFilter
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
-# class VideoList(APIView):
-#     """
-#     List of videos.
-#     """
-#     def get(self, request, format=None):
-#         videos = VideoInformation.objects.filter(is_deleted=False).order_by('-published_on')
-#         serializer = VideoInformationSerializer(videos, many=True)
-#         return Response(serializer.data)
 
 class VideoList(generics.ListCreateAPIView):
     """
